@@ -17,6 +17,32 @@ function task3() {
   // Функція finally викликається після того, як проміс вирішено або відхилено
   // Вона використовується для виконання дій, які повинні виконуватися незалежно від того, чи було проміс вирішено чи відхилено
   // В нашому випадку ми просто виводимо повідомлення, "Завдання 3 завершено"
+
+  const promise1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("Проміс 1 виконано")
+    }, 1000)
+  })
+
+  const promise2 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      reject("Проміс 2 відхилено")
+    }, 2000)
+  })
+
+  Promise.allSettled([promise1, promise2])
+    .then((result) => {
+      result.forEach((result, index) => {
+        if(result.status === "fulfilled") {
+          console.log('Проміс 1:', result)
+        }else{
+          console.log('Проміс 2:', result)
+        }
+      })
+    })
+    .finally(() => {
+      console.log("Завдання 3 завершено")
+    })
 }
 
 // Викликаємо функцію task3
